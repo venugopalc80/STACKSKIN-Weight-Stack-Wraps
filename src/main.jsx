@@ -6,11 +6,11 @@ import "./styles.css";
 const WrapArt = ({ accent, title, sub, className="" }) => (
   <svg className={className} viewBox="0 0 800 900" role="img" aria-label={title + " weight stack wrap"} preserveAspectRatio="xMidYMid slice">
     <defs>
-      <linearGradient id={`bg-${title.replace(/\\W/g,"")}`} x1="0" y1="0" x2="1" y2="1">
+      <linearGradient id={`bg-${accent.replace("#","")}`} x1="0" y1="0" x2="1" y2="1">
         <stop stopColor="#2a2a2a"/><stop offset=".55" stopColor="#080808"/><stop offset="1" stopColor="#151515"/>
       </linearGradient>
     </defs>
-    <rect width="800" height="900" fill={`url(#bg-${title.replace(/\\W/g,"")})`}/>
+    <rect width="800" height="900" fill={`url(#bg-${accent.replace("#","")})`}/>
     <circle cx="400" cy="300" r="300" fill={accent} opacity=".12"/>
     <g fill="#101010" stroke="#555" strokeWidth="4">
       {Array.from({length:9},(_,i)=><rect key={i} x="78" y={95+i*78} width="644" height="64" rx="5"/>)}
