@@ -3,13 +3,33 @@ import { createRoot } from "react-dom/client";
 import { ArrowRight, Check, ChevronDown, Instagram, Menu, Upload, X, Zap } from "lucide-react";
 import "./styles.css";
 
+const wrapArt = (accent, title, sub) => {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#252525"/><stop offset=".55" stop-color="#070707"/><stop offset="1" stop-color="#171717"/></linearGradient>
+      <radialGradient id="r"><stop stop-color="${accent}" stop-opacity=".7"/><stop offset="1" stop-color="${accent}" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="800" height="900" fill="url(#g)"/>
+    <ellipse cx="400" cy="350" rx="380" ry="360" fill="url(#r)" opacity=".35"/>
+    <g fill="#111" stroke="#666" stroke-width="3">${Array.from({length:9},(_,i)=>`<rect x="82" y="${105+i*78}" width="636" height="64" rx="4"/>`).join("")}</g>
+    <g stroke="${accent}" stroke-width="5" opacity=".85">${Array.from({length:9},(_,i)=>`<line x1="110" y1="${137+i*78}" x2="690" y2="${137+i*78}"/>`).join("")}</g>
+    <path d="M165 175 Q400 45 635 175 L590 650 Q400 810 210 650 Z" fill="none" stroke="${accent}" stroke-width="12" opacity=".9"/>
+    <text x="400" y="455" fill="#fff" font-family="Arial Black,Arial" font-size="${title.length>9?48:72}" text-anchor="middle" font-weight="900">${title}</text>
+    <text x="400" y="530" fill="${accent}" font-family="Arial Black,Arial" font-size="31" text-anchor="middle" font-style="italic">${sub}</text>
+    <text x="400" y="770" fill="#aaa" font-family="Arial" font-size="21" text-anchor="middle" letter-spacing="4">11 • 22 • 33 • 44 • 55 • 66 • 77 • 88</text>
+  </svg>`;
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+};
+
 const designs = [
-  { title:"Hulk", type:"Anime", tone:"GREEN", image:"https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1200&q=85" },
-  { title:"Crimson Strike", type:"Premium", tone:"RED", image:"https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=85" },
-  { title:"Neon Oni", type:"Custom", tone:"PURPLE", image:"https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=1200&q=85" },
-  { title:"Shadow Saiyan", type:"Anime", tone:"BLACK", image:"https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=85" },
-  { title:"Gold Edition", type:"Premium", tone:"GOLD", image:"https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1200&q=85" },
-  { title:"Demon Mode", type:"Custom", tone:"VIOLET", image:"https://images.unsplash.com/photo-1584467735871-6b756e50c0ce?auto=format&fit=crop&w=1200&q=85" },
+  { title:"Hulk", type:"Anime", tone:"GREEN", image:wrapArt("#62d52f","HULK","HULK MODE") },
+  { title:"Crimson Strike", type:"Premium", tone:"RED", image:wrapArt("#ff3040","STRIKE","NO LIMITS") },
+  { title:"Neon Oni", type:"Custom", tone:"PURPLE", image:wrapArt("#b64cff","鬼神","CUSTOM ONI") },
+  { title:"Discipline", type:"Anime", tone:"MONOCHROME", image:wrapArt("#f0f0f0","DISCIPLINE","BUILDS FREEDOM") },
+  { title:"Dragon Fury", type:"Premium", tone:"GOLD", image:wrapArt("#f2b51d","DRAGON","DRAGON FURY") },
+  { title:"Skull Reaper", type:"Custom", tone:"DARK", image:wrapArt("#ff3348","REAPER","NO EXCUSES") },
+  { title:"Stealth Camo", type:"Custom", tone:"SIGNATURE", image:wrapArt("#d7ff22","STEALTH","BUILT DIFFERENT") },
+  { title:"Custom Design", type:"Custom", tone:"YOUR VISION", image:wrapArt("#ffd900","YOUR IDEA","YOUR WRAP") },
 ];
 
 const steps = [
