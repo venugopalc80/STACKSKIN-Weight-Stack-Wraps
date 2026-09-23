@@ -3,33 +3,39 @@ import { createRoot } from "react-dom/client";
 import { ArrowRight, Check, ChevronDown, Instagram, Menu, Upload, X, Zap } from "lucide-react";
 import "./styles.css";
 
-const wrapArt = (accent, title, sub) => {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900">
+const WrapArt = ({ accent, title, sub, className="" }) => (
+  <svg className={className} viewBox="0 0 800 900" role="img" aria-label={title + " weight stack wrap"} preserveAspectRatio="xMidYMid slice">
     <defs>
-      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#252525"/><stop offset=".55" stop-color="#070707"/><stop offset="1" stop-color="#171717"/></linearGradient>
-      <radialGradient id="r"><stop stop-color="${accent}" stop-opacity=".7"/><stop offset="1" stop-color="${accent}" stop-opacity="0"/></radialGradient>
+      <linearGradient id={`bg-${title.replace(/\\W/g,"")}`} x1="0" y1="0" x2="1" y2="1">
+        <stop stopColor="#2a2a2a"/><stop offset=".55" stopColor="#080808"/><stop offset="1" stopColor="#151515"/>
+      </linearGradient>
     </defs>
-    <rect width="800" height="900" fill="url(#g)"/>
-    <ellipse cx="400" cy="350" rx="380" ry="360" fill="url(#r)" opacity=".35"/>
-    <g fill="#111" stroke="#666" stroke-width="3">${Array.from({length:9},(_,i)=>`<rect x="82" y="${105+i*78}" width="636" height="64" rx="4"/>`).join("")}</g>
-    <g stroke="${accent}" stroke-width="5" opacity=".85">${Array.from({length:9},(_,i)=>`<line x1="110" y1="${137+i*78}" x2="690" y2="${137+i*78}"/>`).join("")}</g>
-    <path d="M165 175 Q400 45 635 175 L590 650 Q400 810 210 650 Z" fill="none" stroke="${accent}" stroke-width="12" opacity=".9"/>
-    <text x="400" y="455" fill="#fff" font-family="Arial Black,Arial" font-size="${title.length>9?48:72}" text-anchor="middle" font-weight="900">${title}</text>
-    <text x="400" y="530" fill="${accent}" font-family="Arial Black,Arial" font-size="31" text-anchor="middle" font-style="italic">${sub}</text>
-    <text x="400" y="770" fill="#aaa" font-family="Arial" font-size="21" text-anchor="middle" letter-spacing="4">11 • 22 • 33 • 44 • 55 • 66 • 77 • 88</text>
-  </svg>`;
-  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
-};
+    <rect width="800" height="900" fill={`url(#bg-${title.replace(/\\W/g,"")})`}/>
+    <circle cx="400" cy="300" r="300" fill={accent} opacity=".12"/>
+    <g fill="#101010" stroke="#555" strokeWidth="4">
+      {Array.from({length:9},(_,i)=><rect key={i} x="78" y={95+i*78} width="644" height="64" rx="5"/>)}
+    </g>
+    <g stroke={accent} strokeWidth="5" opacity=".9">
+      {Array.from({length:9},(_,i)=><line key={i} x1="105" y1={127+i*78} x2="695" y2={127+i*78}/>)}
+    </g>
+    <path d="M160 175 Q400 45 640 175 L590 650 Q400 815 210 650 Z" fill="none" stroke={accent} strokeWidth="13" opacity=".9"/>
+    <path d="M210 650 Q400 770 590 650" fill="none" stroke="#fff" strokeWidth="3" opacity=".2"/>
+    <text x="400" y="430" fill="#fff" fontFamily="Arial Black,Arial,sans-serif" fontSize={title.length>9?46:70} textAnchor="middle" fontWeight="900" letterSpacing="-2">{title}</text>
+    <text x="400" y="505" fill={accent} fontFamily="Arial Black,Arial,sans-serif" fontSize="30" textAnchor="middle" fontWeight="900" fontStyle="italic">{sub}</text>
+    <text x="400" y="760" fill="#aaa" fontFamily="Arial,sans-serif" fontSize="21" textAnchor="middle" letterSpacing="4">11 • 22 • 33 • 44 • 55 • 66 • 77 • 88</text>
+    <text x="400" y="825" fill="#fff" opacity=".55" fontFamily="Arial,sans-serif" fontSize="14" textAnchor="middle" letterSpacing="3">CUSTOM WEIGHT STACK WRAP</text>
+  </svg>
+);
 
 const designs = [
-  { title:"Hulk", type:"Anime", tone:"GREEN", image:wrapArt("#62d52f","HULK","HULK MODE") },
-  { title:"Crimson Strike", type:"Premium", tone:"RED", image:wrapArt("#ff3040","STRIKE","NO LIMITS") },
-  { title:"Neon Oni", type:"Custom", tone:"PURPLE", image:wrapArt("#b64cff","鬼神","CUSTOM ONI") },
-  { title:"Discipline", type:"Anime", tone:"MONOCHROME", image:wrapArt("#f0f0f0","DISCIPLINE","BUILDS FREEDOM") },
-  { title:"Dragon Fury", type:"Premium", tone:"GOLD", image:wrapArt("#f2b51d","DRAGON","DRAGON FURY") },
-  { title:"Skull Reaper", type:"Custom", tone:"DARK", image:wrapArt("#ff3348","REAPER","NO EXCUSES") },
-  { title:"Stealth Camo", type:"Custom", tone:"SIGNATURE", image:wrapArt("#d7ff22","STEALTH","BUILT DIFFERENT") },
-  { title:"Custom Design", type:"Custom", tone:"YOUR VISION", image:wrapArt("#ffd900","YOUR IDEA","YOUR WRAP") },
+  { title:"Hulk", type:"Anime", tone:"GREEN", accent:"#62d52f", sub:"HULK MODE" },
+  { title:"Crimson Strike", type:"Premium", tone:"RED", accent:"#ff3040", sub:"NO LIMITS" },
+  { title:"Neon Oni", type:"Custom", tone:"PURPLE", accent:"#b64cff", sub:"CUSTOM ONI" },
+  { title:"Discipline", type:"Anime", tone:"MONOCHROME", accent:"#f0f0f0", sub:"BUILDS FREEDOM" },
+  { title:"Dragon Fury", type:"Premium", tone:"GOLD", accent:"#f2b51d", sub:"DRAGON FURY" },
+  { title:"Skull Reaper", type:"Custom", tone:"DARK", accent:"#ff3348", sub:"NO EXCUSES" },
+  { title:"Stealth Camo", type:"Custom", tone:"SIGNATURE", accent:"#d7ff22", sub:"BUILT DIFFERENT" },
+  { title:"Custom Design", type:"Custom", tone:"YOUR VISION", accent:"#ffd900", sub:"YOUR WRAP" },
 ];
 
 const steps = [
@@ -72,9 +78,10 @@ function App(){
           </div>
         </div>
         <div className="hero-visual">
-          <div className="hero-card card-main">
-            <div className="wrap-art art-green"></div>
-            <div className="hero-label"><strong>HULK // CUSTOM</strong><span>Designed for your machine</span></div>
+          <div className="hero-showcase">
+            <div className="showcase-machine machine-one"><WrapArt accent="#ff3040" title="STRIKE" sub="NO LIMITS" /></div>
+            <div className="showcase-machine machine-two"><WrapArt accent="#62d52f" title="HULK" sub="HULK MODE" /></div>
+            <div className="showcase-machine machine-three"><WrapArt accent="#b64cff" title="ONI" sub="CUSTOM" /></div>
           </div>
           <div className="floating-card"><small>EVERY MACHINE</small><strong>DESERVES<br/><i>A STORY.</i></strong></div>
         </div>
@@ -86,7 +93,7 @@ function App(){
         <div className="section-heading"><div><span className="kicker">THE COLLECTION</span><h2>Explore the designs.</h2></div><a href="#custom-order" className="text-link">See how custom works <ArrowRight size={17}/></a></div>
         <div className="filters">{["All","Anime","Premium","Custom"].map(x=><button className={filter===x?"active":""} onClick={()=>setFilter(x)} key={x}>{x}</button>)}</div>
         <div className="grid">{filtered.map(d=><article className="design-card" key={d.title}>
-          <div className="design-image" style={{backgroundImage:"linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.68)),url("+d.image+")"}}><span>{d.type}</span></div>
+          <div className="design-image"><WrapArt accent={d.accent} title={d.title === "Custom Design" ? "YOUR IDEA" : d.title.toUpperCase()} sub={d.sub}/><div className="image-shade"></div><span>{d.type}</span></div>
           <div className="design-meta"><div><h3>{d.title}</h3><small>{d.tone} EDITION</small></div><button className="round"><ArrowRight size={17}/></button></div>
         </article>)}</div>
       </section>
