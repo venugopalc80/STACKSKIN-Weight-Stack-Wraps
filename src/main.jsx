@@ -3,79 +3,32 @@ import { createRoot } from "react-dom/client";
 import { ArrowRight, Check, ChevronDown, Instagram, Menu, Upload, X, Zap } from "lucide-react";
 import "./styles.css";
 
-const WrapArt = ({ accent, title, sub, className="" }) => {
-  const uid = accent.replace("#","");
-  return (
-    <svg className={className} viewBox="0 0 800 900" role="img" aria-label={title + " animated weight stack wrap"} preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <linearGradient id={`bg-${uid}`} x1="0" y1="0" x2="1" y2="1">
-          <stop stopColor="#2a2a2a"/><stop offset=".55" stopColor="#080808"/><stop offset="1" stopColor="#151515"/>
-        </linearGradient>
-        <linearGradient id={`shine-${uid}`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#fff" stopOpacity="0"/>
-          <stop offset=".5" stopColor="#fff" stopOpacity=".3"/>
-          <stop offset="1" stopColor="#fff" stopOpacity="0"/>
-        </linearGradient>
-      </defs>
-
-      <rect width="800" height="900" fill={`url(#bg-${uid})`}/>
-      <circle cx="400" cy="300" r="300" fill={accent} opacity=".12">
-        <animate attributeName="opacity" values=".08;.18;.08" dur="3.8s" repeatCount="indefinite"/>
-      </circle>
-
-      {/* Machine rails */}
-      <rect x="62" y="72" width="676" height="750" rx="10" fill="#070707" stroke="#3e3e3e" strokeWidth="5"/>
-      <rect x="92" y="84" width="18" height="720" rx="9" fill="#454545"/>
-      <rect x="690" y="84" width="18" height="720" rx="9" fill="#454545"/>
-
-      {/* The actual moving weight stack */}
-      <g>
-        <animateTransform attributeName="transform" type="translate"
-          values="0 0; 0 -46; 0 -46; 0 0; 0 0"
-          keyTimes="0;0.28;0.52;0.78;1"
-          dur="4.8s" repeatCount="indefinite"
-          calcMode="spline" keySplines=".25 .8 .25 1;0 1 0 1;.25 .8 .25 1;0 1 0 1"/>
-
-        <g fill="#111" stroke="#666" strokeWidth="4">
-          {Array.from({length:9},(_,i)=><rect key={i} x="78" y={95+i*78} width="644" height="64" rx="5"/>)}
-        </g>
-
-        <g stroke={accent} strokeWidth="5" opacity=".9">
-          {Array.from({length:9},(_,i)=><line key={i} x1="105" y1={127+i*78} x2="695" y2={127+i*78}/>)}
-        </g>
-
-        {/* Wrap artwork moves with the stack */}
-        <path d="M160 175 Q400 45 640 175 L590 650 Q400 815 210 650 Z"
-          fill="none" stroke={accent} strokeWidth="13" opacity=".9"/>
-        <path d="M210 650 Q400 770 590 650" fill="none" stroke="#fff" strokeWidth="3" opacity=".2"/>
-
-        <text x="400" y="430" fill="#fff" fontFamily="Arial Black,Arial,sans-serif"
-          fontSize={title.length>9?46:70} textAnchor="middle" fontWeight="900" letterSpacing="-2">{title}</text>
-        <text x="400" y="505" fill={accent} fontFamily="Arial Black,Arial,sans-serif"
-          fontSize="30" textAnchor="middle" fontWeight="900" fontStyle="italic">{sub}</text>
-      </g>
-
-      {/* Selector pin follows the stack movement */}
-      <g>
-        <animateTransform attributeName="transform" type="translate"
-          values="0 0; 0 -46; 0 -46; 0 0; 0 0"
-          keyTimes="0;0.28;0.52;0.78;1" dur="4.8s" repeatCount="indefinite"
-          calcMode="spline" keySplines=".25 .8 .25 1;0 1 0 1;.25 .8 .25 1;0 1 0 1"/>
-        <rect x="355" y="670" width="90" height="22" rx="11" fill={accent}/>
-        <circle cx="400" cy="681" r="9" fill="#080808"/>
-        <path d="M400 681 H400" stroke="#fff" strokeWidth="4"/>
-      </g>
-
-      {/* Moving highlight makes the vinyl finish feel physical */}
-      <rect x="-220" y="80" width="180" height="740" fill={`url(#shine-${uid})`} opacity=".35" transform="skewX(-14)">
-        <animate attributeName="x" from="-260" to="900" dur="3.6s" repeatCount="indefinite"/>
-      </rect>
-
-      <text x="400" y="760" fill="#aaa" fontFamily="Arial,sans-serif" fontSize="21" textAnchor="middle" letterSpacing="4">11 • 22 • 33 • 44 • 55 • 66 • 77 • 88</text>
-      <text x="400" y="825" fill="#fff" opacity=".55" fontFamily="Arial,sans-serif" fontSize="14" textAnchor="middle" letterSpacing="3">CUSTOM WEIGHT STACK WRAP</text>
-    </svg>
-  );
-};
+const WrapArt = ({ accent, title, sub, className="" }) => (
+  <div className={`wrap-machine ${className}`} style={{"--accent": accent}}>
+    <div className="machine-glow" />
+    <div className="machine-rails"><span/><span/></div>
+    <div className="weight-stack">
+      {Array.from({length:9},(_,i)=>(
+        <div className={`weight-plate plate-${i}`} key={i}>
+          <span className="plate-line" />
+          <span className="plate-hole" />
+        </div>
+      ))}
+      <div className="wrap-skin">
+        <div className="wrap-mark">{title}</div>
+        <div className="wrap-sub">{sub}</div>
+      </div>
+    </div>
+    <div className="selector-arm">
+      <div className="selector-pin" />
+      <span>SELECT</span>
+    </div>
+    <div className="cable"><i /></div>
+    <div className="machine-reflection" />
+    <div className="machine-caption">CUSTOM WEIGHT STACK WRAP</div>
+    <div className="motion-badge"><b>●</b> LIVE MOTION</div>
+  </div>
+);
 
 const designs = [
   { title:"Hulk", type:"Anime", tone:"GREEN", accent:"#62d52f", sub:"HULK MODE" },
