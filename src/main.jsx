@@ -60,7 +60,7 @@ function App(){
         </div>
       </section>
 
-      <section className="marquee"><div>ANIME • PREMIUM • CUSTOM • MADE TO FIT • ANIME • PREMIUM • CUSTOM • MADE TO FIT •</div></section>
+      <section className="marquee"><div>ANIME • PREMIUM • CUSTOM • MADE TO FIT • CUSTOM SIZES • GYM APPROVED • ANIME • PREMIUM • CUSTOM • MADE TO FIT •</div></section>
 
       <section className="section" id="designs">
         <div className="section-heading"><div><span className="kicker">THE COLLECTION</span><h2>Explore the designs.</h2></div><a href="#custom-order" className="text-link">See how custom works <ArrowRight size={17}/></a></div>
